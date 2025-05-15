@@ -1,0 +1,51 @@
+﻿@model List<ResultFeatureDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+
+                <!-- Yeni Öne Çıkan Alan Girişi Butonu -->
+                <a href="/Admin/Feature/CreateFeature" class="btn btn-outline-primary my-4">
+                    Yeni Öne Çıkan Alan Girişi
+                </a>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 text-center">#</div>
+                    <div class="col-7 text-center">Öne Çıkan Alan Adı</div>
+                    <div class="col-2 text-center">Sil</div>
+                    <div class="col-2 text-center">Güncelle</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <div class="row border-bottom py-2">
+                            <div class="col-1 text-center align-middle">@count</div>
+                            <div class="col-7 text-center align-middle">@item.Title</div>
+                            <div class="col-2 text-center align-middle">
+                                <a href="/Admin/Feature/DeleteFeature/@item.FeatureId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                            <div class="col-2 text-center align-middle">
+                                <a href="/Admin/Feature/UpdateFeature/@item.FeatureId">
+                                    <i class="bi bi-pencil-square fs-4 text-success"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

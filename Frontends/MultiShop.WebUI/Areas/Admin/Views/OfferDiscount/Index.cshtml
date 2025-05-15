@@ -1,0 +1,55 @@
+﻿@model List<ResultOfferDiscountDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+
+                <!-- Yeni İndirim Teklif Girişi Butonu -->
+                <a href="/Admin/OfferDiscount/CreateOfferDiscount" class="btn btn-outline-primary my-4">
+                    Yeni İndirim Teklif Girişi
+                </a>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 text-center">#</div>
+                    <div class="col-4 text-center">Teklif Başlığı</div>
+                    <div class="col-4 text-center">Teklif Görseli</div>
+                    <div class="col-1 text-center">Sil</div>
+                    <div class="col-1 text-center">Güncelle</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <div class="row border-bottom py-2">
+                            <div class="col-1 text-center align-middle">@count</div>
+                            <div class="col-4 text-center align-middle">@item.Title</div>
+                            <div class="col-4 text-center align-middle">
+                                <img src="@item.ImageUrl" style="width:120px;height:70px;" class="rounded" />
+                            </div>
+                            <div class="col-1 text-center align-middle">
+                                <a href="/Admin/OfferDiscount/DeleteOfferDiscount/@item.OfferDiscountId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                            <div class="col-1 text-center align-middle">
+                                <a href="/Admin/OfferDiscount/UpdateOfferDiscount/@item.OfferDiscountId">
+                                    <i class="bi bi-pencil-square fs-4 text-success"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

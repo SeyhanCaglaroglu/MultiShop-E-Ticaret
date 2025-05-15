@@ -1,0 +1,52 @@
+﻿@model List<ResultNotificationDto>
+@{
+    ViewData["Title"] = "Kategori Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <a href="/Admin/Notification/DeleteAllNotification" class="btn btn-outline-danger mt-4 mb-5">Tümünü Sil</a>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom py-2">
+                    <div class="col-1 text-center">#</div>
+                    <div class="col-5 text-center">Bildirim Başlığı</div>
+                    <div class="col-4 text-center">Bildirim İçeriği</div>
+                    <div class="col-1 text-center">İncele</div>
+                    <div class="col-1 text-center">Sil</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @if (Model!= null)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <div class="row border-bottom py-2 align-items-center">
+                                <div class="col-1 text-center">@count</div>
+                                <div class="col-5 text-center">@item.Title</div>
+                                <div class="col-4 text-center">@item.Description</div>
+                                <div class="col-1 text-center">
+                                    <a href="/Admin/Comment/Index">
+                                        <i class="bi bi-eye fs-4 text-primary"></i>
+                                    </a>
+                                </div>
+                                <div class="col-1 text-center">
+                                    <a href="/Admin/Notification/DeleteNotification/@item.CommentNotificationId">
+                                        <i class="bi bi-trash fs-4 text-danger"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

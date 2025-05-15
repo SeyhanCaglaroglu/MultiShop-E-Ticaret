@@ -1,0 +1,136 @@
+﻿@model List<ResultProductDto>
+@{
+    ViewData["Title"] = "Tüm Ürünler";
+    Layout = "~/Views/UILayout/_UILayout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="#">Anasayfa</a>
+                <a class="breadcrumb-item text-dark" href="#">Ürünler</a>
+                <span class="breadcrumb-item active">Ürün Listesi</span>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Ürünler -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <!-- Filtreleme Sidebar -->
+        <div class="col-lg-3 col-md-4">
+            @await Component.InvokeAsync("_PriceFilterProductListComponentPartial", new { id = ViewBag.Id })
+            @* @await Component.InvokeAsync("_ColorFilterProductListComponentPartial") *@
+            @* @await Component.InvokeAsync("_SizeFilterProductListComponentPartial") *@
+        </div>
+
+        <!-- Ürün Listesi -->
+        <div class="col-lg-9 col-md-8">
+            <div class="row pb-3">
+                @if (Model != null && Model.Any())
+                {
+                    var discountRates = ViewData["discountRates"] as List<int>;
+                    var commentCounts = ViewData["commentCounts"] as List<int>;
+                    var productAverageRaitings = ViewData["productAverageRaitings"] as List<int>;
+
+                    // Sayfa numarasına göre index başlatma
+                    var page = ViewData["CurrentPage"] as int? ?? 1;
+                    var index = (page - 1) * 6; // Sayfa başına 6 ürün
+
+                    <div class="row col-12 mb-4">
+                        <form action="/ProductList/AllProducts" class="d-flex justify-content-end w-100">
+                            <div class="input-group" style="max-width: 300px;">
+                                <input type="text" name="productName" class="form-control" placeholder="Aranacak Ürünü Giriniz">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    foreach (var item in Model)
+                    {
+                        var rating = productAverageRaitings?[index];
+                        var discountRate = discountRates?[index];
+                        var discountProductPrice = item.ProductPrice - ((item.ProductPrice * discountRate) / 100);
+
+                        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                            <div class="product-item bg-light mb-4">
+                                <div class="product-img position-relative overflow-hidden">
+                                    <img class="img-fluid w-100" src="@item.ProductImageUrl" alt="Ürün Resmi">
+                                    <div class="product-action">
+                                        <a class="btn btn-outline-dark btn-square" href="/ShoppingCart/AddBasketItemm/@item.ProductId"><i class="fa fa-shopping-cart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href="/ProductList/ProductDetail/@item.ProductId"><i class="fa fa-search"></i></a>
+                                    </div>
+                                </div>
+                                <div class="text-center py-4">
+                                    <a class="h6 text-decoration-none text-truncate" href="#">@item.ProductName</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        @if (discountRate != 0)
+                                        {
+                                            <h5>@(discountProductPrice % 1 == 0 ? string.Format("{0:0}", discountProductPrice) : string.Format("{0:0.00}", discountProductPrice)) ₺</h5>
+                                            <h6 class="text-muted ml-2">
+                                                <del>@(item.ProductPrice % 1 == 0 ? string.Format("{0:0}", item.ProductPrice) : string.Format("{0:0.00}", item.ProductPrice)) ₺</del>
+                                            </h6>
+                                        }
+                                        else
+                                        {
+                                            <h6 class="ml-2">@(item.ProductPrice % 1 == 0 ? string.Format("{0:0}", item.ProductPrice) : string.Format("{0:0.00}", item.ProductPrice)) ₺</h6>
+                                        }
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center mb-1">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <small class="fa fa-star @(i <= rating ? "text-primary" : "text-muted") mr-1"></small>
+                                        }
+                                        <small>(@(commentCounts?[index] ?? 0))</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        // index'i her ürün için arttırıyoruz
+                        index++;
+                    }
+                }
+                else
+                {
+                    <div class="row col-12 mb-4">
+                        <form action="/ProductList/AllProducts" class="d-flex justify-content-end w-100">
+                            <div class="input-group" style="max-width: 300px;">
+                                <input type="text" name="productName" class="form-control" placeholder="Aranacak Ürünü Giriniz">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="alert alert-warning text-center" role="alert" style="
+                        position: absolute;
+                        top: 25%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 80%; /* İhtiyaca göre genişliği ayarlayabilirsiniz */
+                        max-width: 500px; /* Maksimum genişlik */
+                            ">
+                        <h4 class="alert-heading">Ürün Bulunamadı</h4>
+                        <p>Aradığınız ürün mevcut değil. Lütfen başka bir terimle arama yapın.</p>
+                        <hr>
+                    </div>
+                }
+
+                @await Component.InvokeAsync("_PaginationProductListComponentPartial", new { currentPage = ViewData["CurrentPage"], totalPages = ViewData["TotalPages"], productName = ViewData["ProductName"], range = ViewData["range"] })
+            </div>
+        </div>
+    </div>
+</div>
+

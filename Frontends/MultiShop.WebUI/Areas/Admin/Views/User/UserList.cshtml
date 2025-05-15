@@ -1,0 +1,47 @@
+﻿@model List<ResultUserDto>
+@{
+    ViewData["Title"] = "Kullanıcı Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="mt-4 my-5">
+                    <a href="/Admin/User/CreateUser" class="btn btn-outline-primary">Yeni Kullanıcı Girişi</a>
+                </div>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 d-flex justify-content-center align-items-center">#</div>
+                    <div class="col-3 d-flex justify-content-center align-items-center">Ad Soyad</div>
+                    <div class="col-3 d-flex justify-content-center align-items-center">Kullanıcı Adı</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">Email</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center ms-5">Kullanıcı Detayı</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <div class="row border-bottom py-2">
+                            <div class="col-1 d-flex justify-content-center align-items-center">@count</div>
+                            <div class="col-3 d-flex justify-content-center align-items-center">@item.name</div>
+                            <div class="col-3 d-flex justify-content-center align-items-center">@item.userName</div>
+                            <div class="col-2 d-flex justify-content-center align-items-center">@item.email</div>
+                            <div class="col-2 d-flex justify-content-center align-items-center ms-5">
+                                <a href="/Admin/User/UserAdressInfo/@item.id"><i class="bi bi-info-circle fs-4 text-danger"></i></a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>

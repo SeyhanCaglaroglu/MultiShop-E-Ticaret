@@ -1,0 +1,73 @@
+﻿@model List<ResultCategoryDto>
+@{
+    ViewData["Title"] = "Kategori Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <!-- Yeni Kategori Ekleme Butonu -->
+                <a href="/Admin/Category/CreateCategory" class="btn btn-outline-primary mt-4 mb-5">Yeni Kategori Girişi</a>
+
+                <!-- Arama Alanı -->
+                <div class="d-flex justify-content-end mb-4">
+                    <input type="text" id="searchInputCategory" class="form-control w-25" placeholder="Kategori Ara..." />
+                </div>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 text-center">#</div>
+                    <div class="col-4 text-center">Kategori Adı</div>
+                    <div class="col-4 text-center">Kategori Görseli</div>
+                    <div class="col-1 text-center">Sil</div>
+                    <div class="col-1 text-center">Güncelle</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <div class="row border-bottom py-2 category-row">
+                            <div class="col-1 text-center align-middle">@count</div>
+                            <div class="col-4 text-center align-middle">@item.CategoryName</div>
+                            <div class="col-4 text-center align-middle">
+                                <img src="@item.ImageUrl" style="width:50px;height:50px;" />
+                            </div>
+                            <div class="col-1 text-center align-middle">
+                                <a href="/Admin/Category/DeleteCategory?id=@item.CategoryId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                            <div class="col-1 text-center align-middle">
+                                <a href="/Admin/Category/UpdateCategory/@item.CategoryId">
+                                    <i class="bi bi-pencil-square fs-4 text-success"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Arama işlemi için JavaScript kodu
+    document.getElementById('searchInputCategory').addEventListener('keyup', function() {
+        var searchValue = this.value.toLowerCase();
+        var rows = document.querySelectorAll('.category-row');
+
+        rows.forEach(function(row) {
+            var categoryName = row.querySelector('.col-4').textContent.toLowerCase();
+            if (categoryName.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>

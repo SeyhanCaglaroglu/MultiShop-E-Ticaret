@@ -1,0 +1,115 @@
+﻿@model GetByIdProductImageDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="ProductImageId" />
+                        <input type="hidden" asp-for="ProductId" />
+
+                        <div class="row">
+                            <!-- Birinci Görsel -->
+                            <div class="col-6 mb-3 text-center">
+                                <label class="f my-2 card-title">Birinci Görsel</label>
+                                <div>
+                                    <img id="currentProductDetailImage1" src="@Model.Image1" class="img-fluid rounded" style="max-width: 100px; height: auto;" />
+                                </div>
+                                <div class="mb-2">
+                                    <input id="ProductDetailImageUrlInput1" type="text" class="form-control" asp-for="Image1" readonly style="display:none" />
+                                </div>
+                                <div class="d-flex justify-content-center mb-2 mt-3">
+                                    <button type="button" id="fileButton1" class="btn btn-outline-dark btn-block w-50">Resim Seç</button>
+                                    <input id="ProductDetailfileInput1" type="file" accept=".png,.jpg,.jpeg" style="display:none;" />
+                                </div>
+                            </div>
+                            <!-- İkinci Görsel -->
+                            <div class="col-6 mb-3 text-center">
+                                <label asp-for="Image2" class="f my-2 card-title">İkinci Görsel</label>
+                                <div>
+                                    <img id="currentProductDetailImage2" src="@Model.Image2" class="img-fluid rounded" style="max-width: 100px; height: auto;" />
+                                </div>
+                                <div class="mb-2">
+                                    <input id="ProductDetailImageUrlInput2" type="text" class="form-control" asp-for="Image2" readonly style="display:none" />
+                                </div>
+                                <div class="d-flex justify-content-center mb-2 mt-3">
+                                    <button type="button" id="fileButton2" class="btn btn-outline-dark btn-block w-50">Resim Seç</button>
+                                    <input id="ProductDetailfileInput2" type="file" accept=".png,.jpg,.jpeg" style="display:none;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Üçüncü Görsel -->
+                            <div class="col-6 mb-3 text-center">
+                                <label asp-for="Image3" class="f my-2 card-title">Üçüncü Görsel</label>
+                                <div>
+                                    <img id="currentProductDetailImage3" src="@Model.Image3" class="img-fluid rounded" style="max-width: 100px; height: auto;" />
+                                </div>
+                                <div class="mb-2">
+                                    <input id="ProductDetailImageUrlInput3" type="text" class="form-control" asp-for="Image3" readonly style="display:none" />
+                                </div>
+                                <div class="d-flex justify-content-center mb-2 mt-3">
+                                    <button type="button" id="fileButton3" class="btn btn-outline-dark btn-block w-50">Resim Seç</button>
+                                    <input id="ProductDetailfileInput3" type="file" accept=".png,.jpg,.jpeg" style="display:none;" />
+                                </div>
+                            </div>
+                            <!-- Dördüncü Görsel -->
+                            <div class="col-6 mb-3 text-center">
+                                <label asp-for="Image4" class="f my-2 card-title">Dördüncü Görsel</label>
+                                <div>
+                                    <img id="currentProductDetailImage4" src="@Model.Image4" class="img-fluid rounded" style="max-width: 100px; height: auto;" />
+                                </div>
+                                <div class="mb-2">
+                                    <input id="ProductDetailImageUrlInput4" type="text" class="form-control" asp-for="Image4" readonly style="display:none" />
+                                </div>
+                                <div class="d-flex justify-content-center mb-2 mt-3">
+                                    <button type="button" id="fileButton4" class="btn btn-outline-dark btn-block w-50">Resim Seç</button>
+                                    <input id="ProductDetailfileInput4" type="file" accept=".png,.jpg,.jpeg" style="display:none;" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Güncelleme Butonu -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary px-4 py-2 w-100">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geri Butonu -->
+        <div class="mt-4">
+            <a href="/Admin/Product/ProductListWithCategory" class="btn btn-secondary">Geri</a>
+        </div>
+    </div>
+</section>
+<script>
+    function initializeFileInput(buttonId, inputId, imgId, urlInputId) {
+        document.getElementById(buttonId).addEventListener('click', function() {
+            document.getElementById(inputId).click();
+        });
+
+        document.getElementById(inputId).addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(imgId).src = e.target.result;
+                    document.getElementById(urlInputId).value = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    initializeFileInput('fileButton1', 'ProductDetailfileInput1', 'currentProductDetailImage1', 'ProductDetailImageUrlInput1');
+    initializeFileInput('fileButton2', 'ProductDetailfileInput2', 'currentProductDetailImage2', 'ProductDetailImageUrlInput2');
+    initializeFileInput('fileButton3', 'ProductDetailfileInput3', 'currentProductDetailImage3', 'ProductDetailImageUrlInput3');
+    initializeFileInput('fileButton4', 'ProductDetailfileInput4', 'currentProductDetailImage4', 'ProductDetailImageUrlInput4');
+</script>

@@ -1,0 +1,51 @@
+﻿@model List<ResultBrandDto>
+@{
+    ViewData["Title"] = "Marka Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <!-- Yeni Marka Ekleme Butonu -->
+                <a href="/Admin/Brand/CreateBrand" class="btn btn-outline-primary mt-4 mb-5">Yeni Marka Girişi</a>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 d-flex justify-content-center align-items-center">#</div>
+                    <div class="col-4 d-flex justify-content-center align-items-center">Marka Adı</div> <!-- Sola kaydırdım ve hizaladım -->
+                    <div class="col-4 d-flex justify-content-center align-items-center">Marka Logosu</div> <!-- Sola kaydırdım ve hizaladım -->
+                    <div class="col-1 d-flex justify-content-center align-items-center">Sil</div>
+                    <div class="col-1 d-flex justify-content-center align-items-center">Güncelle</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <div class="row border-bottom py-2">
+                            <div class="col-1 d-flex justify-content-center align-items-center">@count</div>
+                            <div class="col-4 d-flex justify-content-center align-items-center">@item.BrandName</div> <!-- Sola kaydırdım ve hizaladım -->
+                            <div class="col-4 d-flex justify-content-center align-items-center">
+                                <img src="@item.ImageUrl" style="width:75px;height:75px;" />
+                            </div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="/Admin/Brand/DeleteBrand?id=@item.BrandId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="/Admin/Brand/UpdateBrand/@item.BrandId">
+                                    <i class="bi bi-pencil-square fs-4 text-success"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

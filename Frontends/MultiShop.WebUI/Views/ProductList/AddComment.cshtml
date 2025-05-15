@@ -1,0 +1,96 @@
+﻿<style>
+    .rating i {
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #ccc; /* İlk başta soluk renk */
+        transition: color 0.2s;
+    }
+
+        .rating i.active {
+            color: gold; /* Seçili yıldızlar için sarı renk */
+        }
+
+        .rating i.temp-hover {
+            color: #ffcc80; /* Geçici hover rengi (turuncu) */
+        }
+</style>
+
+<div class="col-md-6">
+    <h4 class="mb-4">Bir Yorum Yapın</h4>
+    <small>Yorumunuzun eklenmesi için geçerli bir email giriniz*</small>
+    <div class="d-flex my-3">
+        <p class="mb-0 mr-2">Puanınız * :</p>
+        <div class="text-primary rating">
+            <i class="far fa-star" data-value="1"></i>
+            <i class="far fa-star" data-value="2"></i>
+            <i class="far fa-star" data-value="3"></i>
+            <i class="far fa-star" data-value="4"></i>
+            <i class="far fa-star" data-value="5"></i>
+        </div>
+    </div>
+    <p id="rating-value" class="mt-2"></p>
+
+    <form method="post" asp-action="AddComment" asp-controller="ProductList">
+        <input type="hidden" name="ProductId" value="@ViewBag.ProductId" />
+        <input type="hidden" name="Raiting" />
+        <div class="form-group">
+            <label for="name">Adınız Soyadınız *</label>
+            <input type="text" class="form-control" id="name" name="NameSurname">
+        </div>
+        <div class="form-group">
+            <label for="email">Email Adresiniz *</label>
+            <input type="email" class="form-control" id="email" name="Email">
+        </div>
+        <div class="form-group">
+            <label for="message">Yorumunuz *</label>
+            <textarea id="message" cols="30" rows="5" class="form-control" name="CommentDetail"></textarea>
+        </div>
+        <div class="form-group mb-0">
+            <input type="submit" value="Yorum Yap" class="btn btn-primary px-3">
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".rating i");
+        const ratingValueDisplay = document.getElementById("rating-value");
+        const ratingInput = document.querySelector("input[name='Raiting']");
+        let selectedRating = 0;
+
+        stars.forEach((star) => {
+            star.addEventListener("click", function () {
+                selectedRating = this.getAttribute("data-value");
+                updateStars(selectedRating);
+                ratingValueDisplay.textContent = `Seçilen Puan: ${selectedRating}`;
+                ratingInput.value = selectedRating; // Raiting input'unu güncelle
+            });
+
+            star.addEventListener("mouseover", function () {
+                const hoverRating = this.getAttribute("data-value");
+                updateStars(hoverRating, true); // Geçici hover için true
+            });
+
+            star.addEventListener("mouseout", function () {
+                updateStars(selectedRating); // Kalıcı seçimi geri yükle
+            });
+        });
+
+        function updateStars(rating, isHover = false) {
+            stars.forEach((star) => {
+                const starValue = star.getAttribute("data-value");
+                if (starValue <= rating) {
+                    if (isHover) {
+                        star.classList.add("temp-hover");
+                        star.classList.remove("active");
+                    } else {
+                        star.classList.add("active");
+                        star.classList.remove("temp-hover");
+                    }
+                } else {
+                    star.classList.remove("active", "temp-hover");
+                }
+            });
+        }
+    });
+</script>

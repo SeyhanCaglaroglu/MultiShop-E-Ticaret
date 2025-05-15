@@ -1,0 +1,43 @@
+﻿@model UpdateFeatureDto
+@{
+    ViewData["Title"] = "UpdateFeature";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Öne Çıkan Alan Güncelleme Sayfası</h5>
+
+                <form method="post">
+                    <input type="hidden" asp-for="FeatureId" />
+                    <div class="my-2">
+                        <label asp-for="Title" class="f mb-2">Öne Çıkan Alan Adı</label>
+                        <input type="text" class="form-control mb-2" asp-for="Title" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="Icon" class="f mb-2">Öne Çıkan Alan İkonu</label>
+                        <input type="text" class="form-control mb-2" asp-for="Icon" />
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Güncelle</button>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/Feature/Index" class="btn btn-secondary">Geri</a>
+        </div>
+
+    </div>
+
+</section>
+

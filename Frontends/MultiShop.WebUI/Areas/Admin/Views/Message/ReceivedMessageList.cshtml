@@ -1,0 +1,69 @@
+﻿@model HeaderAdminViewModel
+@{
+    ViewData["Title"] = "ReceivedMessageList";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <div class="mt-4 my-5">
+                    <h5>Gelen Mesajlar</h5>
+                </div>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 d-flex justify-content-center align-items-center">#</div>
+                    <div class="col-3 d-flex justify-content-start align-items-center">Gönderen</div>
+                    <div class="col-2 d-flex justify-content-start align-items-center">Konu</div>
+                    <div class="col-2 d-flex justify-content-start align-items-center">Tarih</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">Durum</div>
+                    <div class="col-1 d-flex justify-content-center align-items-center">Mesajı Görüntüle</div>
+                    <div class="col-1 d-flex justify-content-center align-items-center">Sil</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model.resultInBoxMessageDto.OrderByDescending(m => m.MessageDate))
+                    {
+                        count++;
+                        // Her mesaj için gönderen kullanıcıyı bulalım
+                        var senderUser = Model.SenderUsers.FirstOrDefault(s => s.id == item.SenderId);
+                        <div class="row border-bottom py-2">
+                            <div class="col-1 d-flex justify-content-center align-items-center">@count</div>
+                            <div class="col-3 d-flex justify-content-start align-items-center">
+                                @if (senderUser != null)
+                                {
+                                    @senderUser.name @senderUser.surname
+                                }
+                                else
+                                {
+                                    <span>Gönderen Bilgisi Bulunamadı</span>
+                                }
+                            </div>
+                            <div class="col-2 d-flex justify-content-start align-items-center">@item.Subject</div>
+                            <div class="col-2 d-flex justify-content-start align-items-center">@item.MessageDate.ToShortDateString()</div>
+                            <div class="col-2 d-flex justify-content-center align-items-center">@item.IsRead</div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="/Admin/Message/ReceivedMessageDetail/@item.UserMessageId">
+                                    <i class="bi bi-eye fs-4 text-primary"></i>
+                                </a>
+                            </div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="/Admin/Message/DeleteReceivedMessage/@item.UserMessageId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

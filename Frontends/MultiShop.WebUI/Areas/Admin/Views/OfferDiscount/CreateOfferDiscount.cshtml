@@ -1,0 +1,198 @@
+﻿@model OfferDiscountViewModel
+@{
+    ViewData["Title"] = "CreateOfferDiscount";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">İndirim Teklifi Ekleme Sayfası</h5>
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="my-2">
+                        <label asp-for="CreateOfferDiscountDto.Title" class="f mb-2">İndirim Teklifi Başlığı</label>
+                        <input type="text" class="form-control mb-2" asp-for="CreateOfferDiscountDto.Title" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="CreateOfferDiscountDto.SubTitle" class="f mb-2">İndirim Teklifi Alt Başlığı</label>
+                        <input type="text" class="form-control mb-2" asp-for="CreateOfferDiscountDto.SubTitle" />
+                    </div>
+                    <div class="my-2">
+                        <label class="f mb-2">Kategori Resmi</label>
+                        <input id="offerDiscountFileC" type="file" accept=".png,.jpg,.jpeg" class="form-control mb-2" />
+                        <input id="offerDiscountImageUrlC" type="hidden" asp-for="CreateOfferDiscountDto.ImageUrl" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="CreateOfferDiscountDto.ButtonName" class="f mb-2">Buton Başlığı</label>
+                        <input type="text" class="form-control mb-2" asp-for="CreateOfferDiscountDto.ButtonName" />
+                    </div>
+                    
+
+                    <!-- Gizli Input Alanı -->
+                    <input type="hidden" id="CategoryId" name="CreateOfferDiscountDto.CategoryId" value="" />
+
+                    <section class="section mt-5">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">İndirim Uygulanacak Kategoriyi Seçiniz</h5>
+
+                                        <!-- Arama Alanı -->
+                                        <div class="search-container position-relative mb-5">
+                                            <input type="text" id="searchInput" class="form-control rounded-pill" placeholder="Arama yap..." onkeyup="searchCategory()" />
+                                        </div>
+
+                                        <!-- Maksimum Satır Ayarı -->
+                                        <div class="mb-3" style="width:180px;">
+                                            <select id="maxRows" class="form-select">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="5000">Tümünü Göster</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Ürünler Tablosu -->
+                                        <table id="CreateTable-id" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Seç</th>
+                                                    <th>Kategori Adı</th>
+                                                    <th>Resim</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.ResultCategories)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <input type="radio" name="CategoryId"
+                                                                   value="@item.CategoryId"
+                                                                   data-image-url="@item.ImageUrl"
+                                                                   onchange="updateOfferImage(this)" />
+                                                        </td>
+                                                        <td>@item.CategoryName</td>
+                                                        <td><img src="@item.ImageUrl" alt="@item.CategoryName" style="width: 50px;" /></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        <!-- Sayfalama -->
+                                        <div class="pagination-container d-flex justify-content-center">
+                                            <button id="prevPage" onclick="changePage(-1)" class="btn btn-light me-2" type="button">
+                                                <i class="bi bi-chevron-left"></i> Önceki
+                                            </button>
+                                            <span id="pageNumber" class="align-self-center">1</span>
+                                            <button id="nextPage" onclick="changePage(1)" class="btn btn-light ms-2" type="button">
+                                                Sonraki <i class="bi bi-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Ekle</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/OfferDiscount/Index" class="btn btn-secondary">Geri</a>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+    document.getElementById('offerDiscountFileC').addEventListener('change',function(event) {
+        var file = event.target.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('offerDiscountImageUrlC').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Sayfalama İşlevi
+    function getPagination(table) {
+        let maxRows = parseInt(document.getElementById("maxRows").value);
+        let totalRows = table.querySelectorAll("tbody tr").length;
+        let pageNum = Math.ceil(totalRows / maxRows);
+        let currentPage = 1;
+
+        const updateTable = () => {
+            let startRow = (currentPage - 1) * maxRows;
+            let endRow = startRow + maxRows;
+
+            table.querySelectorAll("tbody tr").forEach((row, index) => {
+                row.style.display = index >= startRow && index < endRow ? "" : "none";
+            });
+
+            document.getElementById("pageNumber").textContent = currentPage;
+        };
+
+        document.getElementById("prevPage").onclick = () => {
+            if (currentPage > 1) {
+                currentPage--;
+                updateTable();
+            }
+        };
+
+        document.getElementById("nextPage").onclick = () => {
+            if (currentPage < pageNum) {
+                currentPage++;
+                updateTable();
+            }
+        };
+
+        document.getElementById("maxRows").onchange = () => {
+            maxRows = parseInt(document.getElementById("maxRows").value);
+            currentPage = 1;
+            pageNum = Math.ceil(totalRows / maxRows);
+            updateTable();
+        };
+
+        updateTable();
+    }
+
+    // Arama İşlevi
+    function searchCategory() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        const table = document.getElementById("CreateTable-id");
+        const rows = table.querySelectorAll("tbody tr");
+
+        rows.forEach((row) => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(input) ? "" : "none";
+        });
+    }
+
+    // updateOfferImage fonksiyonu: Seçilen radio butonunun veri resmini alır ve günceller
+    function updateOfferImage(radioButton) {
+        const imageUrl = radioButton.getAttribute('data-image-url');
+        // Kategori resmini "ImageUrl" alanına yerleştiriyoruz
+        document.querySelector('input[name="CreateOfferDiscountDto.ImageUrl"]').value = imageUrl;
+        // Seçilen CategoryId'yi gizli input'a yerleştiriyoruz
+        document.getElementById("CategoryId").value = radioButton.value;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const table = document.getElementById("CreateTable-id");
+        getPagination(table);
+    });
+</script>

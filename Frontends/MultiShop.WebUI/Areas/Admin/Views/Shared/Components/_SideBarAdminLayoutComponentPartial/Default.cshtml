@@ -1,0 +1,118 @@
+﻿<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+
+            <i class="bi bi-grid"></i>
+            <span>Menü</span>
+
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/Default/Index">
+                <i class="bi bi-pin-map"></i>
+                <span>Siteye Git</span>
+            </a>
+        </li><!-- End Site go -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Statistic" ? "" : "collapsed")" href="/Admin/Statistic/Index">
+                <i class="bi bi-bar-chart-line"></i>
+                <span>İstatistikler</span>
+            </a>
+        </li><!-- End Statistics -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Category" ? "" : "collapsed")" href="/Admin/Category/Index">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>Kategoriler</span>
+            </a>
+        </li><!-- End Category -->
+
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Product" ? "" : "collapsed")" href="/Admin/Product/ProductListWithCategory">
+                <i class="bi bi-gem"></i>
+                <span>Ürünler</span>
+            </a>
+        </li><!-- End Product -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "FeatureSlider" ? "" : "collapsed")" href="/Admin/FeatureSlider/Index">
+                <i class="bi bi-images"></i>
+                <span>Slayt Paneli</span>
+            </a>
+        </li><!-- End Slider Panel -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "SpecialOffer" ? "" : "collapsed")" href="/Admin/SpecialOffer/Index">
+                <i class="bi bi-percent"></i>
+                <span>Özel Teklifler</span>
+            </a>
+        </li><!-- End Special Offer -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Feature" ? "" : "collapsed")" href="/Admin/Feature/Index">
+                <i class="bi bi-back"></i>
+                <span>Öne Çıkan Alanlar</span>
+            </a>
+        </li><!-- End Feature -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "OfferDiscount" ? "" : "collapsed")" href="/Admin/OfferDiscount/Index">
+                <i class="bi bi-tag"></i>
+                <span>İndirim Teklifleri</span>
+            </a>
+        </li><!-- End OfferDiscount -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Brand" ? "" : "collapsed")" href="/Admin/Brand/Index">
+                <i class="bi bi-briefcase"></i>
+                <span>Markalar</span>
+            </a>
+        </li><!-- End Brand -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "About" ? "" : "collapsed")" href="/Admin/About/Index">
+                <i class="bi bi-people"></i>
+                <span>Hakkımızda Alanı</span>
+            </a>
+        </li><!-- End Brand -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Comment" ? "" : "collapsed")" href="/Admin/Comment/Index">
+                <i class="bi bi-chat-dots"></i>
+                <span>Yorumlar</span>
+            </a>
+        </li><!-- End Comment -->
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "User" ? "" : "collapsed")
+" href="/Admin/User/UserList">
+                <i class="bi bi-people"></i>
+                <span>Kullanıcı Listesi</span>
+            </a>
+        </li><!-- End UserList -->
+
+        
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Cargo" ? "" : "collapsed")" href="/Admin/Cargo/CargoCompanyList">
+                <i class="bi bi-truck"></i>
+                <span>Kargo</span>
+            </a>
+        </li><!-- End Cargo -->
+
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Mail" ? "" : "collapsed")" href="/Admin/Mail/Index">
+                <i class="bi bi-envelope"></i>
+                <span>E-Mail</span>
+            </a>
+        </li><!-- End Mails -->
+
+
+    </ul>
+
+</aside>

@@ -1,0 +1,45 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+@await Component.InvokeAsync("_HeadAdminLayoutComponentPartial")
+
+<body>
+    <!-- ======= Header ======= -->
+    @await Component.InvokeAsync("_HeaderAdminLayoutComponentPartial")
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    @await Component.InvokeAsync("_SideBarAdminLayoutComponentPartial")
+    <!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+        <!-- Page Title Start -->
+        @await Component.InvokeAsync("_PageTitleAdminLayoutComponentPartial")
+        <!-- End Page Title -->
+
+        @RenderBody()
+
+    </main><!-- End #main -->
+    
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/AdminLayout/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="~/AdminLayout/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/AdminLayout/assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="~/AdminLayout/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="~/AdminLayout/assets/vendor/quill/quill.min.js"></script>
+    <script src="~/AdminLayout/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="~/AdminLayout/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/AdminLayout/assets/vendor/php-email-form/validate.js"></script>
+    
+
+    <!-- Template Main JS File -->
+    <script src="~/AdminLayout/assets/js/main.js"></script>
+
+</body>
+
+</html>

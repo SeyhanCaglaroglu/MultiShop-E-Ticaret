@@ -1,0 +1,54 @@
+﻿@model CreateProductDto
+@{
+    ViewData["Title"] = "CreateProduct";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Ürün Ekleme Sayfası</h5>
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="my-2">
+                        <label asp-for="ProductName" class="f mb-2">Ürün Adı</label>
+                        <input type="text" class="form-control mb-2" asp-for="ProductName" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="ProductPrice" class="f mb-2">Ürün Fiyatı</label>
+                        <input type="text" class="form-control mb-2" asp-for="ProductPrice" />
+                    </div>
+                    <div class="my-2">
+                        <label class="f mb-2">Ürün Görseli</label>
+                        <input type="file" accept=".png,.jpg,.jpeg" class="form-control mb-2" name="ImageURL" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="CategoryId" class="f mb-2">Ürün Kategorisi</label>
+                        @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.CategoryValues, new { @class = "form-control" })
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="ProductDescription" class="f mb-2">Ürün Açıklaması</label>
+                        <textarea class="form-control mb-2" asp-for="ProductDescription" rows="5"></textarea>
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Ekle</button>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/Product/ProductListWithCategory" class="btn btn-secondary">Geri</a>
+        </div>
+
+    </div>
+
+</section>
+

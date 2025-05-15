@@ -1,0 +1,81 @@
+﻿@model UpdateFeatureSliderDto
+@{
+    ViewData["Title"] = "Öne Çıkan Slayt Güncelleme";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="FeatureSliderId" />
+
+                        <!-- Şuanki Görsel -->
+                        <div class="mb-2 text-center">
+                            <label class="f my-2 card-title text-center">Şuanki Görsel</label>
+                            <div>
+                                <img id="currentSliderImage" src="@Model.ImageUrl" class="img-fluid rounded" style="width: 100%; max-width: 200px; height: auto;" />
+                            </div>
+                        </div>
+
+                        <!-- Görsel Seçim -->
+                        <div class="mb-2">
+                            <input id="featureSliderImageUrlU" type="text" class="form-control" asp-for="ImageUrl" readonly style="display:none" />
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <button type="button" id="featureSliderfileButton" class="btn btn-outline-dark btn-block w-50">Görsel Seç</button>
+                            <input id="featureSliderImageFileU" type="file" accept=".png,.jpg,.jpeg" style="display:none;" />
+                        </div>
+                        <!-- Görsel Başlığı -->
+                        <div class="mb-2">
+                            <label asp-for="Title" class="f my-2">Görsel Başlığı</label>
+                            <input type="text" class="form-control" asp-for="Title" placeholder="Başlık girin" />
+                        </div>
+
+                        <!-- Görsel Açıklaması -->
+                        <div class="mb-2">
+                            <label asp-for="Description" class="f my-2">Görsel Açıklaması</label>
+                            <input type="text" class="form-control" asp-for="Description" placeholder="Açıklama girin" />
+                        </div>
+
+                        
+
+                        <!-- Güncelleme Butonu -->
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary px-4 py-2 w-100">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geri Butonu -->
+        <div class="mt-4">
+            <a href="/Admin/FeatureSlider/Index" class="btn btn-secondary">Geri</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Görsel Seçme İşlemi
+    document.getElementById('featureSliderfileButton').addEventListener('click', function () {
+        document.getElementById('featureSliderImageFileU').click();
+    });
+
+    document.getElementById('featureSliderImageFileU').addEventListener('change', function (event) {
+        var file = event.target.files[0];
+        if (file) {
+            // Yeni görsel URL'sini okuyarak önizleme
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('currentSliderImage').src = e.target.result;
+                // Yeni seçilen dosyanın URL'ini input'a ekle
+                document.getElementById('featureSliderImageUrlU').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

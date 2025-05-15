@@ -1,0 +1,96 @@
+﻿@model UpdateProductDto
+@{
+    ViewData["Title"] = "Ürün Güncelleme";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="ProductId" />
+
+                        <!-- Şuanki Resim -->
+                        <div class="mb-2 text-center">
+                            <label class="f my-2 card-title text-center">Şuanki Resim</label>
+                            <div>
+                                <img id="currentProductImage" src="@Model.ProductImageUrl" class="img-fluid rounded" style="width: 100%; max-width: 200px; height: auto;" />
+                            </div>
+                        </div>
+
+                        <!-- Resim Seçim -->
+                        <div class="mb-2">
+                            <input id="ProductImageUrlInput" type="text" class="form-control" asp-for="ProductImageUrl" readonly style="display:none" />
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <button type="button" id="fileButton" class="btn btn-outline-dark btn-block w-50">Resim Seç</button>
+                            <input id="ProductfileInput" type="file" accept=".png,.jpg,.jpeg" style="display:none;" />
+                        </div>
+
+                        <!-- Ürün Adı -->
+                        <div class="mb-2">
+                            <label asp-for="ProductName" class="f my-2">Ürün Adı</label>
+                            <input type="text" class="form-control" asp-for="ProductName" placeholder="Ürün adı girin" />
+                        </div>
+
+                        <!-- Ürün Fiyatı -->
+                        <div class="mb-2">
+                            <label asp-for="ProductPrice" class="f my-2">Ürün Fiyatı</label>
+                            <!-- Fiyatı formatlamak için sadece label ve input gösterimi -->
+                            <input type="text" class="form-control" asp-for="ProductPrice" placeholder="Ürün fiyatı girin"
+                                   value="@(@Model.ProductPrice % 1 == 0 ? string.Format("{0:0}", @Model.ProductPrice) : string.Format("{0:0.00}", @Model.ProductPrice))" />
+                        </div>
+
+
+
+                        <!-- Kategori Seçimi -->
+                        <div class="mb-2">
+                            <label asp-for="CategoryId" class="f mb-2">Ürün Kategorisi</label>
+                            @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.CategoryValues, new { @class = "form-control" })
+                        </div>
+
+                        <!-- Ürün Açıklaması -->
+                        <div class="mb-2">
+                            <label asp-for="ProductDescription" class="f mb-2">Ürün Açıklaması</label>
+                            <textarea class="form-control" asp-for="ProductDescription" rows="5" placeholder="Ürün açıklaması girin"></textarea>
+                        </div>
+
+                        <!-- Güncelleme Butonu -->
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary px-4 py-2 w-100">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geri Butonu -->
+        <div class="mt-4">
+            <a href="/Admin/Product/ProductListWithCategory" class="btn btn-secondary">Geri</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Resim Seçme İşlemi
+    document.getElementById('fileButton').addEventListener('click', function () {
+        document.getElementById('ProductfileInput').click();
+    });
+
+    document.getElementById('ProductfileInput').addEventListener('change', function (event) {
+        var file = event.target.files[0];
+        if (file) {
+            // Yeni resim URL'sini okuyarak önizleme
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('currentProductImage').src = e.target.result;
+                // Yeni seçilen dosyanın URL'ini input'a ekle
+                document.getElementById('ProductImageUrlInput').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

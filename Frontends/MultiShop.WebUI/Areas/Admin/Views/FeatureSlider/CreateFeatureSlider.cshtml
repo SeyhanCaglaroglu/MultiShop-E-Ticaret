@@ -1,0 +1,58 @@
+﻿@model CreateFeatureSliderDto
+@{
+    ViewData["Title"] = "CreateFeatureSlider";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Öne Çıkan Slayt Görseli Ekleme Sayfası</h5>
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="my-2">
+                    <label asp-for="Title" class="f mb-2">Görsel Başlığı</label>
+                    <input type="text" class="form-control mb-2" asp-for="Title" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="Description" class="f mb-2">Görsel Açıklaması</label>
+                        <input type="text" class="form-control mb-2" asp-for="Description" />
+                    </div>
+                    <div class="my-2">
+                        <label class="f mb-2">Görsel Linki</label>
+                        <input id="featureSliderImageFile" type="file" accept=".png,.jpg,.jpeg" class="form-control mb-2" />
+                        <input id="featureSliderImageUrl" type="hidden" asp-for="ImageUrl" />
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Ekle</button>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/FeatureSlider/Index" class="btn btn-secondary">Geri</a>
+        </div>
+
+    </div>
+
+</section>
+<script>
+    document.getElementById('featureSliderImageFile').addEventListener('change',function(event) {
+        var file = event.target.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('featureSliderImageUrl').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+    });
+</script>

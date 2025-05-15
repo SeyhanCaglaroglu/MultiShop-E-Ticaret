@@ -1,0 +1,58 @@
+﻿@model List<ResultProductDto>
+
+@if (Model != null)
+{
+    var discountRates = ViewData["discountRates"] as List<int>;
+    var commentCounts = ViewData["commentCounts"] as List<int>;
+    var productAverageRaitings = ViewData["productAverageRaitings"] as List<int>;
+    var index = 0;
+
+    
+
+    @foreach (var item in Model)
+    {
+        var rating = productAverageRaitings?[index];
+        var discountRate = discountRates?[index];
+        var discountProductPrice = item.ProductPrice - ((item.ProductPrice * discountRate) / 100);
+
+        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+            <div class="product-item bg-light mb-4">
+                <div class="product-img position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="@item.ProductImageUrl" alt="">
+                    <div class="product-action">
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                    </div>
+                </div>
+                <div class="text-center py-4">
+                    <a class="h6 text-decoration-none text-truncate" href="">@item.ProductName</a>
+                    <div class="d-flex align-items-center justify-content-center mt-2">
+                        @if (discountRate != 0)
+                        {
+                            <h5>@(discountProductPrice % 1 == 0 ? string.Format("{0:0}", discountProductPrice) : string.Format("{0:0.00}", discountProductPrice)) ₺</h5>
+                            <h6 class="text-muted ml-2">
+                                <del>@(item.ProductPrice % 1 == 0 ? string.Format("{0:0}", item.ProductPrice) : string.Format("{0:0.00}", item.ProductPrice)) ₺</del>
+                            </h6>
+                        }
+                        else
+                        {
+                            <h6 class="ml-2">@(item.ProductPrice % 1 == 0 ? string.Format("{0:0}", item.ProductPrice) : string.Format("{0:0.00}", item.ProductPrice)) ₺</h6>
+                        }
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-1">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <small class="fa fa-star @(i <= rating ? "text-primary" : "text-muted") mr-1"></small>
+                        }
+                        <small>(@(commentCounts?[index] ?? 0))</small>
+                        @{
+                            index++;
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

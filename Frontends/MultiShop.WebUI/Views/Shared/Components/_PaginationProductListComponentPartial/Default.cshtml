@@ -1,0 +1,41 @@
+﻿@if ((int?)ViewData["TotalPages"] > 1)
+{
+    <div class="col-12">
+        <nav>
+            <ul class="pagination justify-content-center">
+                @if ((int)ViewData["CurrentPage"] > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?page=@((int)ViewData["CurrentPage"] - 1)&productName=@ViewData["ProductName"]&range=@ViewData["range"]">Önceki</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link">Önceki</a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                {
+                    <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
+                        <a class="page-link" href="?page=@i&productName=@ViewData["ProductName"]&range=@ViewData["range"]">@i</a>
+                    </li>
+                }
+
+                @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?page=@((int)ViewData["CurrentPage"] + 1)&productName=@ViewData["ProductName"]&range=@ViewData["range"]">İleri</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link">İleri</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+}

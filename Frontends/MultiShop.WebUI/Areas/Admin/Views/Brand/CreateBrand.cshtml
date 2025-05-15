@@ -1,0 +1,54 @@
+﻿@model CreateBrandDto
+@{
+    ViewData["Title"] = "CreateBrand";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Marka Ekleme Sayfası</h5>
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="my-2">
+                        <label asp-for="BrandName" class="f mb-2">Marka Adı</label>
+                        <input type="text" class="form-control mb-2" asp-for="BrandName" />
+                    </div>
+                    <div class="my-2">
+                        <label class="f mb-2">Marka Logosu</label>
+                        <input id="BrandFileC" type="file" accept=".png,.jpg,.jpeg" class="form-control mb-2" />
+                        <input id="BrandImageUrlC" type="hidden" asp-for="ImageUrl" />
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Ekle</button>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/Brand/Index" class="btn btn-secondary">Geri</a>
+        </div>
+
+    </div>
+
+</section>
+<script>
+    document.getElementById('BrandFileC').addEventListener('change',function(event) {
+        var file = event.target.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('BrandImageUrlC').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

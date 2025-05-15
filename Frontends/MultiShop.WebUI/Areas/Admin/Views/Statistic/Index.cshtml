@@ -1,0 +1,295 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section dashboard">
+    <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+            <div class="row">
+
+                
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+                        
+
+                        <div class="card-body">
+                            <h5 class="card-title">Toplam Marka Sayısı</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-briefcase"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.BrandCount</h6>
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+                        
+
+                        <div class="card-body">
+                            <h5 class="card-title">Toplam Kategori Sayısı</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-list"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.CategoryCount</h6>
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Toplam Ürün Sayısı</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-gem"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.ProductCount</h6>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Ürün Fiyat Ortalaması</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-currency-exchange"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@((int)ViewBag.ProductAvgPrice)</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">En Pahalı Ürün</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-cash"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6 style="font-size: 20px;">@ViewBag.MaxPriceProductName</h6>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">En Ucuz Ürün</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-cash-coin"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6 style="font-size: 20px;">@ViewBag.MinPriceProductName</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Toplam Kullanıcı Sayısı</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.UserCount</h6>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Aktif Yorum Sayısı</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-circle-fill"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.ActiveCommentCount</h6>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Pasif Yorum Sayısı</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-circle"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.PassiveCommentCount</h6>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Toplam Yorum Sayısı</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-chat-dots"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.TotalCommentCount</h6>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Toplam İndirim Kuponu</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-gift"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.DiscountCouponCount</h6>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card info-card sales-card">
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">Toplam Mesaj Sayısı</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-chat-left-text"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.TotalMessageCount</h6>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                
+                
+            </div>
+        </div><!-- End Left side columns -->
+        
+
+    </div>
+</section>
+

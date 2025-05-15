@@ -1,0 +1,21 @@
+﻿    @model List<ResultSpecialOfferDto>
+
+<div class="col-lg-4">
+    @foreach (var item in Model)
+    {
+        // Sayısal değeri ayıklamak için regex kullanma
+        var numberString = System.Text.RegularExpressions.Regex.Match(item.Title, @"\d+").Value;
+
+        decimal number = 0;
+        decimal.TryParse(numberString, out number);
+
+        <div class="product-offer mb-30" style="height: 200px;">
+            <img class="img-fluid" src="@item.ImageUrl" alt="" style="height:200px;">
+            <div class="offer-text">
+                <h6 class="text-white text-uppercase">@item.Title</h6>
+                <h3 class="text-white mb-3">@item.SubTitle</h3>
+                <a href="/ProductList/ProductDetail/@item.ProductId?number=@number" class="btn btn-primary">Teklifi İncele</a>
+            </div>
+        </div>
+    }
+</div>

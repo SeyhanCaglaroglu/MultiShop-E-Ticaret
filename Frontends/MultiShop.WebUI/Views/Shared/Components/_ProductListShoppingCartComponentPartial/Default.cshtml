@@ -1,0 +1,90 @@
+﻿@model List<BasketItemDto>
+
+@{
+    var offerDiscounts = ViewData["offerDiscounts"] as List<int>;
+    var index = 0;
+}
+<div class="col-lg-8 table-responsive mb-5">
+    <table class="table table-light table-borderless table-hover text-center mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th>Ürün</th>
+                <th>Fiyat</th>
+                <th>Miktar</th>
+                <th>Toplam</th>
+                <th>Kaldır</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+
+            @foreach (var item in Model)
+            {
+                var discountRate = offerDiscounts != null && index < offerDiscounts.Count ? offerDiscounts[index] : 0;
+                var discountedPrice = item.Price * (1 - ((decimal)discountRate / 100));
+                var displayPrice = discountRate > 0 ? discountedPrice : item.Price;
+
+                <tr data-product-id="@item.ProductId">
+                    <td class="align-middle text-start" style="display: flex; align-items: center;">
+                        <img src="@item.ProductImageUrl" alt="" style="width: 50px; height: 60px; margin-right: 10px;">
+                        <span>@item.ProductName</span>
+                    </td>
+                    <td class="align-middle product-price" data-price="@displayPrice">
+                        @displayPrice.ToString("C", new System.Globalization.CultureInfo("tr-TR"))
+                    </td>
+                    <td class="align-middle">
+                        <div class="input-group quantity mx-auto" style="width: 100px;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-primary btn-minus" onclick="minus(@item.ProductId);" data-product-id="@item.ProductId">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center quantity-input" value="@item.Quantity" data-product-id="@item.ProductId">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-primary btn-plus" onclick="plus(@item.ProductId);" data-product-id="@item.ProductId">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="align-middle product-total">
+                        @((displayPrice * item.Quantity).ToString("C", new System.Globalization.CultureInfo("tr-TR")))
+                    </td>
+                    <td class="align-middle"><a href="/ShoppingCart/RemoveBasketItem/@item.ProductId" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a></td>
+                </tr>
+
+                index++;
+            }
+
+        </tbody>
+    </table>
+</div>
+<script>
+        function plus(productId) {
+        var quantityInput = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+        var quantity = parseInt(quantityInput.value);
+        quantityInput.value = quantity + 1; // Miktarı 1 artır
+
+        // Toplam fiyatı güncelle
+        updateTotalPrice(productId, quantity + 1);
+    }
+
+    function minus(productId) {
+        var quantityInput = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+        var quantity = parseInt(quantityInput.value);
+        if (quantity > 1) {
+            quantityInput.value = quantity - 1; // Miktarı 1 azalt (min 1 olacak)
+
+            // Toplam fiyatı güncelle
+            updateTotalPrice(productId, quantity - 1);
+        }
+    }
+
+    function updateTotalPrice(productId, quantity) {
+        var row = document.querySelector(`tr[data-product-id="${productId}"]`);
+        var price = parseFloat(row.querySelector('.product-price').getAttribute('data-price'));
+        var totalCell = row.querySelector('.product-total');
+        var total = price * quantity;
+        totalCell.textContent = total.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' });
+    }
+
+</script>

@@ -1,0 +1,47 @@
+﻿@model MailViewModel
+@{
+    ViewData["Title"] = "Mail Gönder";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Mail Gönderme Sayfası</h5>
+
+                <form method="post">
+                    <div class="my-2">
+                        <label class="f mb-2">Alıcı E-Mail</label>
+                        <textarea name="ReceiveMaiLList" class="form-control" rows="5" readonly>@string.Join(", ", Model.ResultUsers.Select(x => x.email))</textarea>
+
+                    </div>
+                    <div class="my-2">
+                        <label class="f mb-2">Konu</label>
+                        <input type="text" class="form-control mb-2" name="Subject" />
+                    </div>
+                    <div class="my-2">
+                        <label class="f mb-2">Mesaj</label>
+                        <textarea type="text" class="form-control mb-2" name="Content" rows="5"></textarea>
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Gönder</button>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/About/Index" class="btn btn-secondary">Geri</a>
+        </div>
+
+    </div>
+
+</section>
+

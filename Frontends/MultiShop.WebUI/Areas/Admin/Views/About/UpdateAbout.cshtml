@@ -1,0 +1,52 @@
+﻿@model UpdateAboutDto
+@{
+    ViewData["Title"] = "UpdateAbout";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Hakkımızda Alanı Güncelleme Sayfası</h5>
+
+                <form method="post">
+                    <input type="hidden" asp-for="AboutId" />
+
+                    <div class="my-2">
+                        <label asp-for="Description" class="f my-2">Açıklama</label>
+                        <input type="text" class="form-control my-2" asp-for="Description" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="Adress" class="f my-2">Adres</label>
+                        <input type="text" class="form-control my-2" asp-for="Adress" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="Email" class="f my-2">Email</label>
+                        <input type="text" class="form-control my-2" asp-for="Email" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="Phone" class="f my-2">Telefon</label>
+                        <input type="text" class="form-control my-2" asp-for="Phone" />
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Güncelle</button>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/About/Index" class="btn btn-secondary">Geri</a>
+        </div>
+
+    </div>
+
+</section>
+

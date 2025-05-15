@@ -1,0 +1,42 @@
+﻿@model CreateCategoryDto
+@{
+    ViewData["Title"] = "CreateCategory";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Kategori Ekleme Sayfası</h5>
+                
+                <form method="post" enctype="multipart/form-data">
+                    <div class="my-2">
+                        <label asp-for="CategoryName" class="f mb-2">Kategori Adı</label>
+                        <input type="text" class="form-control mb-2" asp-for="CategoryName" />
+                    </div>
+                    <div class="my-2">
+                        <label class="f mb-2">Kategori Resmi</label>
+                        <input type="file" accept=".png,.jpg,.jpeg" class="form-control mb-2" name="ImageURL" />
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Ekle</button>
+                    </div>
+                    
+                </form>
+                
+                
+
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/Category/Index" class="btn btn-secondary">Geri</a>
+        </div>
+        
+    </div>
+
+</section>
+

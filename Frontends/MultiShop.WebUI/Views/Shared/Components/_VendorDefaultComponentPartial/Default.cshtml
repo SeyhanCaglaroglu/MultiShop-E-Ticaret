@@ -1,0 +1,19 @@
+﻿@model List<ResultBrandDto>
+<!-- Vendor Start -->
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel vendor-carousel">
+                
+                @foreach (var item in Model)
+                {
+                    <div class="bg-light p-4">
+                        <img src="@item.ImageUrl" alt="" style="height:150px;">
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Vendor End -->

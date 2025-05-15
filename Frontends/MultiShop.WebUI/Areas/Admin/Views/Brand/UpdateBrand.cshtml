@@ -1,0 +1,71 @@
+﻿@model UpdateBrandDto
+@{
+    ViewData["Title"] = "UpdateBrand";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="BrandId" />
+
+                        <!-- Görsel Seçimi -->
+                        <div class="mb-2 text-center">
+                            <label class="f my-2 card-title text-center">Mevcut Görsel</label>
+                            <div>
+                                <img id="currentOfferImage" src="@Model.ImageUrl" class="img-fluid rounded" style="width: 100%; max-width: 100px; height: auto;" />
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <input id="brandImageUrl" type="text" class="form-control" asp-for="ImageUrl" readonly style="display:none" />
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <button type="button" id="brandFileButton" class="btn btn-outline-dark btn-block w-50">Görsel Seç</button>
+                            <input id="brandFileInput" type="file" accept=".png,.jpg,.jpeg" style="display:none;" />
+                        </div>
+
+                        <!-- Marka Adı -->
+                        <div class="my-2">
+                            <label asp-for="BrandName" class="f my-2">Marka Adı</label>
+                            <input type="text" class="form-control my-2" asp-for="BrandName" />
+                        </div>
+
+                        <!-- Güncelleme Butonu -->
+                        <div class="text-center mb-4 mt-3">
+                            <button type="submit" class="btn btn-primary px-4 py-2 w-100">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geri Butonu -->
+        <div class="mt-4">
+            <a href="/Admin/Brand/Index" class="btn btn-secondary">Geri</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Görsel Seçme İşlemi
+    document.getElementById('brandFileButton').addEventListener('click', function () {
+        document.getElementById('brandFileInput').click();
+    });
+
+    document.getElementById('brandFileInput').addEventListener('change', function (event) {
+        var file = event.target.files[0];
+        if (file) {
+            // Yeni görsel URL'sini okuyarak önizleme
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('currentOfferImage').src = e.target.result;
+                document.getElementById('brandImageUrl').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

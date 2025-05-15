@@ -1,0 +1,221 @@
+﻿@model OfferDiscountViewModel
+@{
+    ViewData["Title"] = "İndirim Teklifi Güncelleme";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="UpdateOfferDiscountDto.OfferDiscountId" />
+                        <input type="hidden" id="hiddenCategoryId" class="form-control my-2" asp-for="UpdateOfferDiscountDto.CategoryId" />
+
+                        <!-- Görsel Seçimi -->
+                        <div class="mb-2 text-center">
+                            <label class="f my-2 card-title text-center">Mevcut Görsel</label>
+                            <div>
+                                <img id="currentOfferImage" src="@Model.UpdateOfferDiscountDto.ImageUrl" class="img-fluid rounded" style="width: 100%; max-width: 200px; height: auto;" />
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <input id="offerImageUrlInput" type="text" class="form-control" asp-for="UpdateOfferDiscountDto.ImageUrl" readonly style="display:none" />
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <button type="button" id="offerImageFileButton" class="btn btn-outline-dark btn-block w-50">Görsel Seç</button>
+                            <input id="offerImageFileInput" type="file" accept=".png,.jpg,.jpeg" style="display:none;" />
+                        </div>
+
+                        <!-- Başlık ve Alt Başlık -->
+                        <div class="mb-2">
+                            <label asp-for="UpdateOfferDiscountDto.Title" class="f my-2">İndirim Teklifi Başlığı</label>
+                            <input type="text" class="form-control" asp-for="UpdateOfferDiscountDto.Title" placeholder="Başlık girin" />
+                        </div>
+                        <div class="mb-2">
+                            <label asp-for="UpdateOfferDiscountDto.SubTitle" class="f my-2">İndirim Teklifi Alt Başlığı</label>
+                            <input type="text" class="form-control" asp-for="UpdateOfferDiscountDto.SubTitle" placeholder="Alt başlık girin" />
+                        </div>
+
+                        
+
+                        <!-- Buton Başlığı -->
+                        <div class="mb-2">
+                            <label asp-for="UpdateOfferDiscountDto.ButtonName" class="f my-2">Buton Başlığı</label>
+                            <input type="text" class="form-control" asp-for="UpdateOfferDiscountDto.ButtonName" placeholder="Buton başlığı girin" />
+                        </div>
+
+                        <!-- Kategoriler Seçimi -->
+                        <section class="section mt-5">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">İndirim Uygulanacak Kategoriyi Seçiniz</h5>
+
+                                            <!-- Arama Alanı -->
+                                            <div class="search-container position-relative mb-5">
+                                                <input type="text" id="searchInput" class="form-control rounded-pill" placeholder="Arama yap..." onkeyup="searchCategory()" />
+                                            </div>
+
+                                            <!-- Maksimum Satır Ayarı -->
+                                            <div class="mb-3" style="width:180px;">
+                                                <select id="maxRows" class="form-select">
+                                                    <option value="5">5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="15">15</option>
+                                                    <option value="5000">Tümünü Göster</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Kategoriler Tablosu -->
+                                            <table id="UpdateTable-id" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Seç</th>
+                                                        <th>Kategori Adı</th>
+                                                        <th>Resim</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.ResultCategories)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <input type="radio" name="UpdateOfferDiscountDto.CategoryId"
+                                                                       value="@item.CategoryId"
+                                                                       data-image-url="@item.ImageUrl"
+                                                                       onclick="updateCategoryId(this)"
+                                                                @(Model.UpdateOfferDiscountDto.CategoryId == item.CategoryId ? "checked" : "") />
+                                                            </td>
+                                                            <td>@item.CategoryName</td>
+                                                            <td><img src="@item.ImageUrl" alt="@item.CategoryName" style="width: 50px;" /></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                            <!-- Sayfalama -->
+                                            <div class="pagination-container d-flex justify-content-center">
+                                                <button id="prevPage" onclick="changePage(-1)" class="btn btn-light me-2" type="button">
+                                                    <i class="bi bi-chevron-left"></i> Önceki
+                                                </button>
+                                                <span id="pageNumber" class="align-self-center">1</span>
+                                                <button id="nextPage" onclick="changePage(1)" class="btn btn-light ms-2" type="button">
+                                                    Sonraki <i class="bi bi-chevron-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Güncelleme Butonu -->
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary px-4 py-2 w-100">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geri Butonu -->
+        <div class="mt-4">
+            <a href="/Admin/OfferDiscount/Index" class="btn btn-secondary">Geri</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Görsel Seçme İşlemi
+    document.getElementById('offerImageFileButton').addEventListener('click', function () {
+        document.getElementById('offerImageFileInput').click();
+    });
+
+    document.getElementById('offerImageFileInput').addEventListener('change', function (event) {
+        var file = event.target.files[0];
+        if (file) {
+            // Yeni görsel URL'sini okuyarak önizleme
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('currentOfferImage').src = e.target.result;
+                document.getElementById('offerImageUrlInput').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Radio buton tıklandığında gizli input'u güncelle
+    function updateCategoryId(radioButton) {
+        const hiddenInput = document.getElementById('hiddenCategoryId');
+        hiddenInput.value = radioButton.value;
+        console.log("Seçilen Kategori ID:", hiddenInput.value);
+    }
+
+    // Sayfalama İşlevi
+    function getPagination(table) {
+        let maxRows = parseInt(document.getElementById("maxRows").value);
+        let totalRows = table.querySelectorAll("tbody tr").length;
+        let pageNum = Math.ceil(totalRows / maxRows);
+        let currentPage = 1;
+
+        const updateTable = () => {
+            let startRow = (currentPage - 1) * maxRows;
+            let endRow = startRow + maxRows;
+
+            table.querySelectorAll("tbody tr").forEach((row, index) => {
+                row.style.display = index >= startRow && index < endRow ? "" : "none";
+            });
+
+            document.getElementById("pageNumber").textContent = currentPage;
+        };
+
+        document.getElementById("prevPage").onclick = () => {
+            if (currentPage > 1) {
+                currentPage--;
+                updateTable();
+            }
+        };
+
+        document.getElementById("nextPage").onclick = () => {
+            if (currentPage < pageNum) {
+                currentPage++;
+                updateTable();
+            }
+        };
+
+        document.getElementById("maxRows").onchange = () => {
+            maxRows = parseInt(document.getElementById("maxRows").value);
+            currentPage = 1;
+            pageNum = Math.ceil(totalRows / maxRows);
+            updateTable();
+        };
+
+        updateTable();
+    }
+
+    // Arama İşlevi
+    function searchCategory() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toUpperCase();
+        const table = document.getElementById("UpdateTable-id");
+        const rows = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+            const td = rows[i].getElementsByTagName("td")[1];
+            if (td) {
+                const txtValue = td.textContent || td.innerText;
+                rows[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+            }
+        }
+    }
+
+    // Sayfalama başlat
+    window.onload = function () {
+        const table = document.getElementById("UpdateTable-id");
+        getPagination(table);
+    };
+</script>

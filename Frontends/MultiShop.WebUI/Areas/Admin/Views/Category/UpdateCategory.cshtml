@@ -1,0 +1,77 @@
+﻿@model UpdateCategoryDto
+@{
+    ViewData["Title"] = "UpdateCategory";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    
+
+                    <form method="post">
+                        <input type="hidden" asp-for="CategoryId" />
+
+                        <!-- Şuanki Resim -->
+                        <div class="mb-2 text-center">
+                            <label class="f my-2 card-title text-center">Şuanki Resim</label>
+                            <div>
+                                <img id="currentImage" src="@Model.ImageUrl" class="img-fluid rounded" style="width: 100%; max-width: 200px; height: auto;" />
+                            </div>
+                        </div>
+
+                        <!-- Resim Seçim -->
+                        <div class="mb-2">
+                            <input id="imageUrlInput" type="text" class="form-control" asp-for="ImageUrl" readonly style="display:none" />
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <button type="button" id="fileButton" class="btn btn-outline-dark btn-block w-50">Resim Seç</button>
+                            <input id="fileInput" type="file" name="ImageURL" accept=".png,.jpg,.jpeg" style="display:none;" />
+                        </div>
+
+                        <!-- Kategori Adı -->
+                        <div class="mb-5">
+                            <label asp-for="CategoryName" class="f my-2">Kategori Adı</label>
+                            <input type="text" class="form-control" asp-for="CategoryName" placeholder="Kategori adı girin" />
+                        </div>
+
+                        <!-- Güncelleme Butonu -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary px-4 py-2 w-100">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Geri Butonu -->
+            
+        </div>
+    </div>
+    <div class="mt-4">
+        <a href="/Admin/Category/Index" class="btn btn-secondary">Geri</a>
+    </div>
+</section>
+
+<script>
+    document.getElementById('fileButton').addEventListener('click', function () {
+        document.getElementById('fileInput').click();
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        var file = event.target.files[0];
+        if (file) {
+            // Yeni resim URL'sini okuyarak önizleme
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('currentImage').src = e.target.result;
+                // Yeni seçilen dosyanın URL'ini input'a ekle
+                document.getElementById('imageUrlInput').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

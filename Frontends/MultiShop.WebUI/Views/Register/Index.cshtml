@@ -1,0 +1,103 @@
+﻿@model CreateRegisterDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Giriş & Kayıt Formu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/RegisterLoginLayout/style.css">
+    
+    <link href="~/adminlayout/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div>
+        <nav style="position: absolute; top: 20px; left: 40px;">
+            <a href="#" style="text-decoration: none;">
+                <span class="h1 text-uppercase" style="font-size: 2.4rem; text-transform: uppercase; color: #ffd700; background-color: #3D464D; margin: 0; padding: 5px; font-weight: bold;">Multi</span>
+                <span class="h1 text-uppercase" style="font-size: 2.4rem; text-transform: uppercase; color: #3D464D; background-color: #ffd700; margin-left: -5px; padding: 5px; font-weight: bold;">Shop</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="cont">
+        <div class="form sign-in" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; position: relative;">
+            @if (TempData["errorMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["errorMessage"]</div>
+            }
+    <h2>Giriş Yap</h2>
+    <form method="post" asp-action="Login" asp-controller="Register" style="margin-top: 20px; width: 100%; max-width: 400px;">
+        <label style="width: 100%; margin-bottom: 5px;">
+            <span>Kullanıcı Adı</span>
+            <input type="text" style="width: 100%;" name="UserName">
+        </label>
+        <label style="width: 100%; margin-bottom: 5px;">
+            <span>ŞİFRE</span>
+            <input type="password" name="Password" style="width: 100%;">
+        </label>
+        <button class="submit" type="submit" style="width: 100%;">GİRİŞ</button>
+    </form>
+</div>
+
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img-text m-up">
+                    <h1>Henüz bir hesabınız yokmu?</h1>
+                    <p>Hemen MultiShop hesabınızı oluşturun</p>
+                </div>
+                <div class="img-text m-in">
+                    <h1>Zaten bir hesabınız varmı?</h1>
+                    <p>Hemen giriş yapın</p>
+                </div>
+                <div class="img-btn">
+                    <span class="m-up">Kayıt Ol</span>
+                    <span class="m-in">GİRİŞ Yap</span>
+                </div>
+            </div>
+            <div id="sign-up" class="form sign-up">
+                <h2>Kayıt Ol</h2>
+                <form method="post" asp-action="Index" asp-controller="Register">
+                    <label>
+                        <span>Ad</span>
+                        <input type="text" asp-for="Name">
+                    </label>
+                    <label>
+                        <span>Soyad</span>
+                        <input type="text" asp-for="Surname">
+                    </label>
+                    <label>
+                        <span>Kullanıcı Adı</span>
+                        <input type="text" asp-for="UserName">
+                    </label>
+                    <label>
+                        <span>EMAİL</span>
+                        <input type="email" asp-for="Email">
+                    </label>
+                    <label>
+                        <span>Şİfre</span>
+                        <input type="password" asp-for="Password">
+                    </label>
+                    <label>
+                        <span>Şİfre Tekrar</span>
+                        <input type="password" asp-for="ConfirmPassword">
+                    </label>
+                    
+                    <label>
+                        <span>Şartları okudum <a href="#">Kabul edİyorum.</a></span>
+                        <input type="checkbox">
+
+                    </label>
+
+                    <button type="submit" class="submit">Şİmdİ Kayıt Ol</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/RegisterLoginLayout/main.js"></script>
+</body>
+</html>

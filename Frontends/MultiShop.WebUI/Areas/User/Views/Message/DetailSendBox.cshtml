@@ -1,0 +1,47 @@
+﻿@model GetByIdMessageDto
+@{
+    ViewData["Title"] = "Mesaj Detayları";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Mesaj Detayı</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th style="text-align: right; font-weight: bold; width: 25%;">Alıcı:</th>
+                                        <td style="text-align: left;">@Model.ReceivedId</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: right; font-weight: bold;">Konu:</th>
+                                        <td style="text-align: left;">@Model.Subject</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: right; font-weight: bold;">Tarih:</th>
+                                        <td style="text-align: left;">@Model.MessageDate.ToString("dd-MM-yyyy HH:mm")</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th style="text-align: right; font-weight: bold;">Mesaj İçeriği:</th>
+                                        <td style="text-align: left;">@Model.MessageDetail</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <a href="/User/Message/SendBox" class="btn btn-primary">Geri Dön</a>
+                            <a href="/User/Message/DeleteSendBox/@Model.UserMessageId" class="btn btn-danger">Mesajı Sil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+</div>

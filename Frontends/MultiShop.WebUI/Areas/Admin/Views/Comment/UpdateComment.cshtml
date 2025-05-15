@@ -1,0 +1,70 @@
+﻿@model UpdateCommentDto
+@{
+    ViewData["Title"] = "UpdateComment";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+<section class="section">
+    <div class="row">
+        
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Yorum Güncelleme Sayfası</h5>
+
+                <form method="post">
+                    <input type="hidden" asp-for="UserCommentId" />
+                    <input type="hidden" asp-for="ProductId" />
+
+                    <div class="my-2">
+                        <label asp-for="NameSurname" class="f my-2">Kullanıcı</label>
+                        <input type="text" class="form-control my-2" asp-for="NameSurname" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="ImageUrl" class="f my-2">Kullanıcı Görseli</label>
+                        <input type="text" class="form-control my-2" asp-for="ImageUrl" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="Email" class="f my-2">Kullanıcı Email</label>
+                        <input type="text" class="form-control my-2" asp-for="Email" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="Raiting" class="f my-2">Kullanıcı puanı</label>
+                        <input type="number" class="form-control my-2" asp-for="Raiting" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="CreatedDate" class="f my-2">Yorum Yapılma Tarihi</label>
+                        <input type="text" class="form-control my-2" asp-for="CreatedDate" />
+                    </div>
+                    <div class="my-2">
+                        <label asp-for="Status" class="f my-2">Yorum Durumu</label>
+                        <select class="form-control my-2" name="Status">
+                            @Html.Raw(Model.Status
+                                     ? "<option value='Aktif' selected>Aktif</option><option value='Pasif'>Pasif</option>"
+                                     : "<option value='Aktif'>Aktif</option><option value='Pasif' selected>Pasif</option>")
+                        </select>
+                    </div>
+
+
+                    <div class="my-2">
+                        <label asp-for="CommentDetail" class="f my-2">Yorum</label>
+                        <textarea class="form-control my-2" asp-for="CommentDetail" rows="3"></textarea>
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <button type="submit" class="btn btn-primary px-4 py-2 ">Güncelle</button>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+        </div>
+
+        <div>
+            <a href="/Admin/Comment/Index" class="btn btn-secondary">Geri</a>
+        </div>
+
+    </div>
+
+</section>
+

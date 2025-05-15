@@ -1,0 +1,53 @@
+﻿@model List<ResultSpecialOfferDto>
+@{
+    ViewData["Title"] = "Özel Teklif Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <!-- Yeni Teklif Girişi Butonu -->
+                <a href="/Admin/SpecialOffer/CreateSpecialOffer" class="btn btn-outline-primary mt-4 mb-5">Yeni Teklif Girişi</a>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 text-center">#</div>
+                    <div class="col-3 text-center">Teklif Başlığı</div>
+                    <div class="col-3 text-center">Teklif Alt Başlığı</div>
+                    <div class="col-3 text-center">Teklif Görseli</div>
+                    <div class="col-1 text-center">Sil</div>
+                    <div class="col-1 text-center">Güncelle</div>
+                </div>
+
+                <!-- İçerik -->
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <div class="row border-bottom py-2">
+                            <div class="col-1 text-center align-middle">@count</div>
+                            <div class="col-3 text-center align-middle">@item.Title</div>
+                            <div class="col-3 text-center align-middle">@item.SubTitle</div>
+                            <div class="col-3 text-center align-middle">
+                                <img src="@item.ImageUrl" style="width:75px;height:75px;" />
+                            </div>
+                            <div class="col-1 text-center align-middle">
+                                <a href="/Admin/SpecialOffer/DeleteSpecialOffer/@item.SpecialOfferId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                            <div class="col-1 text-center align-middle">
+                                <a href="/Admin/SpecialOffer/UpdateSpecialOffer/@item.SpecialOfferId">
+                                    <i class="bi bi-pencil-square fs-4 text-success"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

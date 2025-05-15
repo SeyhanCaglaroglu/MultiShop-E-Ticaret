@@ -1,0 +1,58 @@
+﻿@model List<ResultAboutDto>
+@{
+    ViewData["Title"] = "Hakkımızda Alanı Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <div class="mt-4 my-5">
+                    <a href="/Admin/About/CreateAbout" class="btn btn-outline-primary">Yeni Hakkımızda Alanı Girişi</a>
+                </div>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 d-flex justify-content-center align-items-center">#</div>
+                    <div class="col-3 d-flex justify-content-center align-items-center">Açıklama</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">Adres</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">Email</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">Telefon</div>
+                    <div class="col-1 d-flex justify-content-center align-items-center">Sil</div>
+                    <div class="col-1 d-flex justify-content-center align-items-center">Güncelle</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <div class="row border-bottom py-2">
+                            <div class="col-1 d-flex justify-content-center align-items-center">@count</div>
+                            <div class="col-3 d-flex justify-content-center align-items-center">@item.Description</div>
+                            <div class="col-2 d-flex justify-content-center align-items-center">@item.Adress</div>
+                            <div class="col-2 d-flex justify-content-center align-items-center">@item.Email</div>
+                            <div class="col-2 d-flex justify-content-center align-items-center">@item.Phone</div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="/Admin/About/DeleteAbout?id=@item.AboutId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="/Admin/About/UpdateAbout/@item.AboutId">
+                                    <i class="bi bi-pencil-square fs-4 text-success"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Yeni Hakkımızda Alanı Ekleme Butonu -->
+                
+
+            </div>
+        </div>
+    </div>
+</section>

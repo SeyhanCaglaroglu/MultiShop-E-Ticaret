@@ -1,0 +1,71 @@
+﻿@model List<ResultInBoxMessageDto>
+@{
+    ViewData["Title"] = "InBox";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+    int count = 0;
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Gelen Mesajlar</h4>
+                        @* <p class="card-description">
+                        Add class <code>.table</code>
+                        </p> *@
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="font-weight: bold; text-align: center;">#</th>
+                                        <th style="font-weight: bold; text-align: center;">Gönderen</th>
+                                        <th style="font-weight: bold; text-align: center;">Konu</th>
+                                        <th style="font-weight: bold; text-align: center;">Tarih</th>
+                                        <th style="font-weight: bold; text-align: center;">Sil</th>
+                                        <th style="font-weight: bold; text-align: center;">Mesajı Aç</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <th style="text-align: center; font-size: 18px;">@count</th>
+                                            <td style="text-align: center; font-size: 18px;">
+                                                @ViewBag.userName
+                                            </td>
+                                            <td style="text-align: center; font-size: 18px;">
+                                                @item.Subject
+                                            </td>
+                                            <td style="text-align: center; font-size: 18px;">
+                                                @item.MessageDate.ToString("dd-MM-yyyy")
+                                            </td>
+                                            
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                <a href="/User/Message/DeleteInBox/@item.UserMessageId">
+                                                    <i class="mdi mdi-delete" style="font-size: 30px;"></i>
+                                                </a>
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                <a href="/User/Message/DetailInBox/@item.UserMessageId">
+                                                    <i class="mdi mdi-eye" style="font-size: 30px;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+
+</div>
+

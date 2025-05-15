@@ -1,0 +1,55 @@
+﻿@model List<ResultProductDto>
+@{
+    ViewData["Title"] = "Ürün Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <!-- Yeni Ürün Ekleme Butonu -->
+                <a href="/Admin/Product/CreateProduct" class="btn btn-outline-primary mt-4 mb-5">Yeni Ürün Girişi</a>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 text-center">#</div>
+                    <div class="col-4 text-center">Ürün Adı</div>
+                    <div class="col-2 text-center">Ürün Fiyatı</div>
+                    <div class="col-2 text-center">Ürün Görseli</div>
+                    <div class="col-1 text-center">Sil</div>
+                    <div class="col-1 text-center">Güncelle</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <div class="row border-bottom py-2">
+                            <div class="col-1 text-center align-middle">@count</div>
+                            <div class="col-4 text-center align-middle">@item.ProductName</div>
+                            <div class="col-2 text-center align-middle">
+                                @(item.ProductPrice % 1 == 0 ? string.Format("{0:0}", item.ProductPrice) : string.Format("{0:0.00}", item.ProductPrice)) ₺
+                            </div>
+                            <div class="col-2 text-center align-middle">
+                                <img src="@item.ProductImageUrl" style="width:50px;height:50px;" />
+                            </div>
+                            <div class="col-1 text-center align-middle">
+                                <a href="/Admin/Product/DeleteProduct?id=@item.ProductId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                            <div class="col-1 text-center align-middle">
+                                <a href="/Admin/Product/UpdateProduct/@item.ProductId">
+                                    <i class="bi bi-pencil-square fs-4 text-success"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

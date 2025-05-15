@@ -1,0 +1,88 @@
+﻿@model List<ResultCommentDto>
+@{
+    ViewData["Title"] = "Yorum Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <div class="mt-4 my-5">
+                    <a href="/Admin/Comment/CreateComment" class="btn btn-outline-primary">Yeni Yorum Girişi</a>
+                </div>
+
+                <!-- Arama Alanı -->
+                <div class="d-flex justify-content-end mb-3">
+                    <input type="text" id="searchInputComment" class="form-control w-25" placeholder="Yorum Ara..." />
+                </div>
+
+                <!-- Başlıklar -->
+                <div class="row fw-bold border-bottom">
+                    <div class="col-1 d-flex justify-content-center align-items-center">#</div>
+                    <div class="col-3 d-flex justify-content-center align-items-center">Kullanıcı</div>
+                    <div class="col-3 d-flex justify-content-center align-items-center">Yorum</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">Tarih</div>
+                    <div class="col-1 d-flex justify-content-center align-items-center">Durum</div>
+                    <div class="col-1 d-flex justify-content-center align-items-center">Sil</div>
+                    <div class="col-1 d-flex justify-content-center align-items-center">Güncelle</div>
+                </div>
+
+                <!-- Tablo İçeriği -->
+                <div>
+                    @foreach (var item in Model.OrderByDescending(m => m.CreatedDate))
+                    {
+                        count++;
+                        <div class="row border-bottom py-2 comment-row">
+                            <div class="col-1 d-flex justify-content-center align-items-center">@count</div>
+                            <div class="col-3 d-flex justify-content-center align-items-center">@item.NameSurname</div>
+                            <div class="col-3 d-flex justify-content-center align-items-center">@item.CommentDetail</div>
+                            <div class="col-2 d-flex justify-content-center align-items-center">@item.CreatedDate.ToShortDateString()</div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                @if (item.Status == true)
+                                {
+                                    <span>Aktif</span>
+                                }
+                                else
+                                {
+                                    <span>Pasif</span>
+                                }
+                            </div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="/Admin/Comment/DeleteComment?id=@item.UserCommentId">
+                                    <i class="bi bi-trash fs-4 text-danger"></i>
+                                </a>
+                            </div>
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="/Admin/Comment/UpdateComment/@item.UserCommentId">
+                                    <i class="bi bi-pencil-square fs-4 text-success"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Arama işlemi için JavaScript kodu
+    document.getElementById('searchInputComment').addEventListener('keyup', function() {
+        var searchValue = this.value.toLowerCase();
+        var rows = document.querySelectorAll('.comment-row');
+
+        rows.forEach(function(row) {
+            var commentUser = row.querySelector('.col-3').textContent.toLowerCase();
+            var commentText = row.querySelector('.col-3:nth-child(3)').textContent.toLowerCase();
+
+            if (commentUser.includes(searchValue) || commentText.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
